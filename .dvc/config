@@ -1,0 +1,4 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = /Users/jpv/Bharath_J_P_V/Learning/dvc_storage
