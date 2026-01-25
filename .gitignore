@@ -1,2 +1,6 @@
 /model.pkl
 /metrics.json
+
+test.txt
+
+__pycache__/
