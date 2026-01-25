@@ -2,6 +2,10 @@ mkdocs
 pip
 python-dotenv
 ruff
-
+pandas
+numpy
+scikit-learn
+fastapi
+uvicorn
 
 -e .
