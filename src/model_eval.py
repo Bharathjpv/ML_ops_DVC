@@ -10,8 +10,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 def load_processed_data(file_path):
     try:
-        train_data = pd.read_csv(os.path.join(file_path, 'train_processed.csv'))
-        test_data = pd.read_csv(os.path.join(file_path, 'test_processed.csv'))
+        train_data = pd.read_csv(os.path.join(file_path, 'train_processed_mean.csv'))
+        test_data = pd.read_csv(os.path.join(file_path, 'test_processed_mean.csv'))
         return train_data, test_data
     except Exception as e:
         raise Exception(f"Error loading processed data: {e}")
