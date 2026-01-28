@@ -4,7 +4,7 @@ import pandas as pd
 import os
 import pickle
 import json
-
+from dvclive import Live
 from sklearn import metrics
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
@@ -34,12 +34,18 @@ def evaluate_model(model, test_data) -> dict:
         recall = recall_score(y_test, y_pred)
         f1 = f1_score(y_test, y_pred)
 
-        return {
-                'accuracy': accuracy,
-                'precision': precision,
-                'recall': recall,
-                'f1_score': f1
-            }
+        with Live(save_dvc_exp=True) as live:
+            live.log_metric('accuracy', accuracy)
+            live.log_metric('precision', precision)
+            live.log_metric('recall', recall)
+            live.log_metric('f1_score', f1)
+
+            return {
+                    'accuracy': accuracy,
+                    'precision': precision,
+                    'recall': recall,
+                    'f1_score': f1
+                }
     except Exception as e:
         raise Exception(f"Error evaluating model: {e}")
     
@@ -60,7 +66,7 @@ def main():
         _, test_data = load_processed_data(processed_data_path)
         model = load_model(model_path)
         metrics_dict = evaluate_model(model, test_data)
-        save_metrics(metrics_dict, metrics_path)
+        # save_metrics(metrics_dict, metrics_path)
 
         print("Model evaluation completed successfully.")
     except Exception as e:

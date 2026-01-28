@@ -3,3 +3,7 @@ numpy
 scikit-learn
 fastapi
 uvicorn
+dvclive
+nvidia-ml-py
+dvc
+pynvml

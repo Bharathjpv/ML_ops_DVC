@@ -3,11 +3,13 @@ stages:
     cmd: python src/data_collection.py
     deps:
     - src/data_collection.py
+    - params.yaml
     params:
     - data_collection.test_size
     - data_collection.random_state
     outs:
     - data/raw
+    - dvclive/params.yaml
   data_processing:
     cmd: python src/data_prep.py
     deps:
@@ -20,6 +22,7 @@ stages:
     deps:
     - data/processed
     - src/model_building.py
+    - params.yaml
     params:
     - model_building.n_estimators
     outs:
@@ -30,4 +33,9 @@ stages:
     - model.pkl
     - src/model_eval.py
     metrics:
-    - metrics.json
+    - dvclive/metrics.json
+metrics:
+- dvclive/metrics.json
+plots:
+- dvclive/plots/metrics:
+    x: step

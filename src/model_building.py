@@ -1,5 +1,3 @@
-from re import X
-from networkx import config
 import pandas as pd
 import numpy as np
 import os
@@ -7,6 +5,7 @@ import yaml
 
 import pickle
 from sklearn.ensemble import RandomForestClassifier
+from dvclive import Live
 
 def read_yaml(file_path):
     try:
@@ -45,18 +44,20 @@ def save_model(clf, model_path):
 
 def main():
     try:
-        param_file_path = 'params.yaml'
-        processed_data_path = os.path.join('data', 'processed')
-        model_path = 'model.pkl'
+        with Live(save_dvc_exp=True) as live:
+            param_file_path = 'params.yaml'
+            processed_data_path = os.path.join('data', 'processed')
+            model_path = 'model.pkl'
+            params = read_yaml(param_file_path)
+            n_estimators = params['model_building']['n_estimators']
+            
+            train_data, _ = load_processed_data(processed_data_path)
+            clf = train_model(train_data, n_estimators)
+            save_model(clf, model_path)
 
-        params = read_yaml(param_file_path)
-        n_estimators = params['model_building']['n_estimators']
+            live.log_param('n_estimators', n_estimators)
 
-        train_data, _ = load_processed_data(processed_data_path)
-        clf = train_model(train_data, n_estimators)
-        save_model(clf, model_path)
-
-        print("Model training and saving completed successfully.")
+            print("Model training and saving completed successfully.")
     except Exception as e:
         raise Exception(f"Error in main execution: {e}")
     
