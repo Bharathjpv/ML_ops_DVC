@@ -22,7 +22,6 @@ stages:
     deps:
     - data/processed
     - src/model_building.py
-    - params.yaml
     params:
     - model_building.n_estimators
     outs:
